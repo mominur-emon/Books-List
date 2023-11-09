@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer>
       <p>
-        Copy Right <span>&#169;</span>2023
+        Copyright <span>&#169;</span>2023 by Emon
       </p>
     </footer>
   );
