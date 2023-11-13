@@ -1,0 +1,40 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialBooks = localStorage.getItem("books")
+  ? JSON.parse(localStorage.getItem("books"))
+  : { books: [] };
+
+export const booksSlice = createSlice({
+  name: "books",
+  initialState: initialBooks,
+  reducers: {
+    showBooks: (state) => {
+      return state;
+    },
+    addBook: (state, action) => {
+      state.books.push(action.payload);
+      localStorage.setItem("books", JSON.stringify(state));
+    },
+    updateBook: (state, action) => {
+      //get data
+      const { id, author, title } = action.payload;
+      //check id match
+      const isExistBook = state.books.filter((book) => book.id === id);
+      //if id match update
+      if (isExistBook) {
+        isExistBook[0].title = title;
+        isExistBook[0].author = author;
+        localStorage.setItem("books", JSON.stringify(state));
+      }
+    },
+    deleteBook: (state, action) => {
+      const id = action.payload;
+      state.books = state.books.filter((book) => book.id !== id);
+      localStorage.setItem("books", JSON.stringify(state));
+    },
+  },
+});
+
+export const { showBooks, addBook, deleteBook, updateBook } =
+  booksSlice.actions;
+export default booksSlice.reducer;
